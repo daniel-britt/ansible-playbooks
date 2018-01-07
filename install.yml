@@ -1,0 +1,44 @@
+---
+- name: Deploy all the things!!!!!
+  hosts: working
+  #connection: local
+  become: true
+
+  tasks:
+
+    - name: install base packages
+      apt: pkg={{item}} state=present update_cache=yes cache_valid_time=604800
+      with_items:
+        - htop
+        - git
+        - python-dev
+        - nmap
+        - build-essential
+        - python-pip
+        - python3-pip
+        - screen
+
+    - name: upgrade pip
+      command: pip install -U pip
+
+    - name: upgrade pip3
+      command: pip3 install -U pip
+
+    - name: Install pip packages
+      pip: name={{item}} state=present
+      with_items:
+
+        - numpy
+        - sympy
+        - matplotlib
+        - pandas
+        - ipython
+        - jupyter
+        - nose
+        - scikit-learn
+        - scikit-image
+        - statsmodels
+        - ggplot
+        - scipy
+#        - tensorflow
+
