@@ -1,2 +1,2 @@
 # ansbile-playbooks
-Playbook for installing the essentials
+Playbook for doing the usual things
