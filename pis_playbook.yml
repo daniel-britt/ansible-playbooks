@@ -1,0 +1,20 @@
+---
+- name: Update pi-backup
+  hosts: pi-backup
+
+  tasks:
+  - name: Update packages
+    become: true
+    ansible.builtin.apt:
+      update_cache: true
+      cache_valid_time: 3600
+
+  - name: Upgrade packages
+    become: true
+    ansible.builtin.apt:
+      upgrade: true
+
+  - name: Upgrade docker containers
+    community.docker.docker_compose:
+      project_src: '/home/pi/docker/resilio-sync'
+      pull: true
