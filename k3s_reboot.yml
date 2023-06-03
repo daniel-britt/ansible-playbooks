@@ -1,0 +1,8 @@
+---
+- name: Reboot all k3s
+  hosts: k3s
+
+  tasks:
+  - name: Reboot all k3s hosts
+    become: true
+    shell: sudo reboot now

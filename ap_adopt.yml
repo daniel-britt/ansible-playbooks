@@ -1,7 +1,0 @@
----
-- name: Connect AP back to unraid controller
-  hosts: ap
-
-  tasks:
-  - name: Inform controller of AP to be adopted on non-standard port
-    ansible.builtin.command: set-inform http://10.0.0.5:8180/inform

@@ -1,0 +1,42 @@
+---
+- name: Update k3s and get rid of snap
+  hosts: k3s
+
+  tasks:
+  - name: Update packages
+    become: true
+    ansible.builtin.apt:
+      update_cache: true
+      cache_valid_time: 3600
+
+  - name: Upgrade packages
+    become: true
+    ansible.builtin.apt:
+      upgrade: true
+
+  # - name: Stop snap daemon service - service
+  #   become: true
+  #   shell: sudo systemctl disable snapd.service
+
+  # - name: Stop snap daemon service - socket
+  #   become: true
+  #   shell: sudo systemctl disable snapd.socket
+
+  # - name: Stop snap daemon service - seeded.service
+  #   become: true
+  #   shell: sudo systemctl disable snapd.seeded.service
+
+  # - name: Delete snap cache data
+  #   become: true
+  #   shell: sudo rm -rf /var/cache/snapd/
+
+  # - name: Delete snap
+  #   apt:
+  #     pkg: snapd
+  #     state: absent
+  #   become: true
+
+  # - name: Create Rancher directory
+  #   become: true
+  #   shell: sudo mkdir -p /etc/rancher/k3s/
+      
