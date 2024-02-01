@@ -1,6 +1,6 @@
 ---
 - name: Update pi-backup
-  hosts: pi-backup
+  hosts: pi-backup, pi4
 
   tasks:
   - name: Update packages

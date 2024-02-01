@@ -1,44 +1,61 @@
 ---
 - name: Deploy all the things!!!!!
-  hosts: working
-  #connection: local
-  become: true
+  hosts: pi4
+  # become: true
 
   tasks:
+    - name: install base packages.
+      become: true
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 604800
+        pkg:
+          - htop
+          - git
+          - nmap
+          - build-essential
+          - python3-pip
+          - tmux
+          - zsh
+          - bat
 
-    - name: install base packages
-      apt: pkg={{item}} state=present update_cache=yes cache_valid_time=604800
-      with_items:
-        - htop
-        - git
-        - python-dev
-        - nmap
-        - build-essential
-        - python-pip
-        - python3-pip
-        - screen
+    - name: Change shell to zsh.
+      become: true #Run this with -K
+      ansible.builtin.user:
+        name: pirate
+        shell: /bin/zsh
 
-    - name: upgrade pip
-      command: pip install -U pip
+    - name: Install oh-my-zsh.
+      ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-    - name: upgrade pip3
-      command: pip3 install -U pip
+    # - name: install PowerLevel10k
+    #   ansible.builtin.shell: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
-    - name: Install pip packages
-      pip: name={{item}} state=present
-      with_items:
+    - name: Install docker.
+      ansible.builtin.shell: curl -fsSL get.docker.com | sh
 
-        - numpy
-        - sympy
-        - matplotlib
-        - pandas
-        - ipython
-        - jupyter
-        - nose
-        - scikit-learn
-        - scikit-image
-        - statsmodels
-        - ggplot
-        - scipy
-#        - tensorflow
+    # - name: upgrade pip
+    #   command: pip3 install -U pip
 
+    # - name: upgrade pip3
+    #   command: pip3 install -U pip
+
+    # - name: Install docker
+    #   command: curl -fsSL get.docker.com | sh
+
+    # - name: Install pip packages
+    #   pip: name={{item}} state=present
+    #   with_items:
+
+    #     - numpy
+    #     - sympy
+    #     - matplotlib
+    #     - pandas
+    #     - ipython
+    #     - jupyter
+    #     - nose
+    #     - scikit-learn
+    #     - scikit-image
+    #     - statsmodels
+    #     - ggplot
+    #     - scipy
