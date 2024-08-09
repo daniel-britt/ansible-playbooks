@@ -1,18 +1,46 @@
 ---
 - name: Update k3s and get rid of snap
-  hosts: k3s
+  hosts: k3stest
 
   tasks:
-  - name: Update packages
-    become: true
-    ansible.builtin.apt:
-      update_cache: true
-      cache_valid_time: 3600
+    - name: Update packages
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
 
-  - name: Upgrade packages
-    become: true
-    ansible.builtin.apt:
-      upgrade: true
+    - name: Upgrade packages
+      become: true
+      ansible.builtin.apt:
+        upgrade: true
+
+    - name: Installing sudo, zsh, curl
+      become: true
+      ansible.builtin.apt:
+        name:
+          - sudo
+          - zsh
+          - curl
+          - neovim
+          - micro
+          - qemu-guest-agent
+        state: present
+
+    # - name: Create user
+    #   ansible.builtin.user:
+    #     name: pirate
+    #     state: present
+    #     create_home: true
+    #     password: "{{ 'hypriot' | password_hash('sha512', 'saltttt') }}"
+    #     shell: /bin/zsh
+    #     groups:
+    #       - sudo
+
+    - name: Set authorized keys taken from url
+      ansible.posix.authorized_key:
+        user: pirate
+        state: present
+        key: https://github.com/daniel-britt.keys
 
   # - name: Stop snap daemon service - service
   #   become: true
@@ -39,4 +67,3 @@
   # - name: Create Rancher directory
   #   become: true
   #   shell: sudo mkdir -p /etc/rancher/k3s/
-      

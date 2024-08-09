@@ -1,8 +1,8 @@
 ---
 - name: Reboot all k3s
-  hosts: k3s
+  hosts: k3stest
 
   tasks:
-  - name: Reboot all k3s hosts
-    become: true
-    shell: sudo reboot now
+    - name: Reboot all k3s hosts
+      become: true
+      shell: sudo reboot now

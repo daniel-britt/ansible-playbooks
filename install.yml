@@ -4,10 +4,10 @@
   # become: true
 
   tasks:
-    - name: install base packages.
+    - name: Install base packages.
       become: true
       ansible.builtin.apt:
-        update_cache: yes
+        update_cache: true
         cache_valid_time: 604800
         pkg:
           - htop
@@ -31,8 +31,8 @@
     # - name: install PowerLevel10k
     #   ansible.builtin.shell: git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
-    - name: Install docker.
-      ansible.builtin.shell: curl -fsSL get.docker.com | sh
+    # - name: Install docker.
+    #   ansible.builtin.shell: curl -fsSL get.docker.com | sh
 
     # - name: upgrade pip
     #   command: pip3 install -U pip
