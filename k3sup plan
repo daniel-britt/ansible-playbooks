@@ -1,0 +1,6 @@
+k3sup plan \
+  plan.json \
+  --user pirate \
+  --servers 3 \
+  --server-k3s-extra-args "--disable servicelb" \
+  --server-k3s-extra-args "--disable traefik" > bootstrap.sh
